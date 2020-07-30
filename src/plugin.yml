@@ -1,5 +1,5 @@
 name: DebugSystem
-version: 1.0
+version: 1.0-BETA
 author: EnumType
 main: de.leafmc.debug.spigot.Debug
 commands:
