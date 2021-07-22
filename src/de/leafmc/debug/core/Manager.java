@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Lists;
+
 public final class Manager {
 	
 	private final List<Object> debugs = new ArrayList<>();
@@ -17,18 +19,17 @@ public final class Manager {
 	public void add(final String plugin, final Object object) {
 		if(pluginDebugs.containsKey(plugin)) {
 			pluginDebugs.get(plugin).add(object);
-		}else {
-			final List<Object> list = new ArrayList<>();
+		} else {
+			final List<Object> list = Lists.newArrayList();
 			list.add(object);
 			pluginDebugs.put(plugin, list);
 		}
 	}
 	
 	public boolean isDebugged(final String pluginName) {
-		for(final String plugin : pluginDebugs.keySet()) {
-			if(plugin.equalsIgnoreCase(pluginName)) return true;
-		}
-		
+		for(final String plugin : pluginDebugs.keySet())
+			if(plugin.equalsIgnoreCase(pluginName)) 
+				return true;
 		return false;
 	}
 	
@@ -37,10 +38,8 @@ public final class Manager {
 	}
 	
 	public List<Object> getDebugs(final String pluginName) {
-		if(isDebugged(pluginName)) {
+		if(isDebugged(pluginName))
 			return pluginDebugs.get(pluginName);
-		}
-		
 		return new ArrayList<Object>();
 	}
 	

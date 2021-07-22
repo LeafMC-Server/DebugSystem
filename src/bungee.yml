@@ -1,4 +1,6 @@
 name: BungeeDebug
 version: 1.0-BETA
 author: EnumType
-main: de.leafmc.debug.bungee.Debug
+main: de.leafmc.debug.bungee.BungeeDebug
+commands:
+  bdebug:
