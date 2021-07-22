@@ -1,17 +1,16 @@
-package de.leafmc.debug.bungee;
+package de.leafmc.debug.spigot;
 
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.plugin.Command;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 
-public final class CommandBungeeDebug extends Command {
+import de.leafmc.debug.bungee.BungeeDebug;
 
-	public CommandBungeeDebug(final String name, final String permission, final String... aliases) {
-		super(name, permission, aliases);
-	}
+public final class CommandSpigotDebug implements CommandExecutor {
 	
 	/**
 	 * 
-	 * <h2>execute(CommandSender, String[])</h2>
+	 * <h2>execute(CommandSender, Command, String, String[])</h2>
 	 * 
 	 * First of all, the method checks a few rules about the syntax.
 	 * If the syntax isn't correct a proper syntax-message will show up and method stops prematurely.
@@ -32,18 +31,16 @@ public final class CommandBungeeDebug extends Command {
 	 * 
 	 */
 	
-	@SuppressWarnings("deprecation")
 	@Override
-	public void execute(final CommandSender sender, final String[] args) {
+	public boolean onCommand(final CommandSender sender, final Command cmd, final String str, final String[] args) {
 		if (args.length < 1 || args.length > 2) {
 			sender.sendMessage(BungeeDebug.PREFIX + "§c/bdebug show [PluginName]");
-			return;
+			return true;
 		}
 		if (!args[0].equalsIgnoreCase("show")) {
 			sender.sendMessage(BungeeDebug.PREFIX + "§c/bdebug show [PluginName]");
-			return;
+			return true;
 		}
-		
 		switch (args.length) {
 		case 1:
 			for (final Object object : BungeeDebug.getInstance().getManager().getDebugs())
@@ -52,7 +49,7 @@ public final class CommandBungeeDebug extends Command {
 		case 2:
 			if (!BungeeDebug.getInstance().getManager().isDebugged(args[1])) {
 				sender.sendMessage("§cKeine Debugs ans Plugin §e" + args[1] + " §cvorhanden");
-				return;
+				return true;
 			}
 			for (final Object object : BungeeDebug.getInstance().getManager().getDebugs(args[1]))
 				sender.sendMessage(BungeeDebug.PREFIX + "§c" + object.toString());
@@ -62,6 +59,7 @@ public final class CommandBungeeDebug extends Command {
 		default:
 			break;
 		}
+		return true;
 	}
-
+	
 }
